@@ -20,5 +20,4 @@ function asset($path)
 function route($path)
 {
     return $_ENV['URL_PATH'] . $path;
-    // return 'http://localhost/srms/sms/' . $path;
 }

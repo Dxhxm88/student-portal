@@ -4,6 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['email'])) {
-    $path = route('index.php');
+    $path = route('');
     header("Location: $path");
 }
