@@ -19,7 +19,6 @@
             <div class="row">
                 <div class="col-12 text-center py-5 border-bottom my-5">
                     <h1 class="display-4">Welcome to <?= $_ENV['APP_NAME'] ?></h1>
-                    <p class="lead">Learn more about our products and services.</p>
                     <a href="<?= route('student/login.php') ?>" class="btn btn-primary btn-lg mx-3">Login</a>
                 </div>
                 <div class="col-12 text-center py-5 my-5">
