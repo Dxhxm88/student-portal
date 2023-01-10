@@ -15,7 +15,23 @@
     <?php include(asset('inc/navbar.php')) ?>
 
     <main class="container">
-        <h1>Home</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center py-5 border-bottom my-5">
+                    <h1 class="display-4">Welcome to <?= $_ENV['APP_NAME'] ?></h1>
+                    <p class="lead">Learn more about our products and services.</p>
+                    <a href="<?= route('student/login.php') ?>" class="btn btn-primary btn-lg mx-3">Login</a>
+                </div>
+                <div class="col-12 text-center py-5 my-5">
+                    <h1 class="display-4">Our mission</h1>
+                    <p class="lead">To create a transformative educational experience for
+                        students focused on deep disciplinary knowledge;
+                        problem solving; leadership, communication, and
+                        interpersonal skills; and personal health and well-being.
+                    </p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <?php include(asset('inc/footer.php')) ?>
