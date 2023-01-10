@@ -1,4 +1,11 @@
-<?php include('config/include.php') ?>
+<?php
+include('../config/include.php');
+include(asset('controller/admin-controller.php'));
+
+if (isset($_POST['submit'])) {
+    login($_POST);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +21,21 @@
 <body>
     <?php include(asset('inc/navbar.php')) ?>
 
-    <main class="container">
-        <h1>Home</h1>
+    <main class="container mt-4">
+        <div class="w-50 border border-cornered p-3 mx-auto">
+            <h1>Admin Login</h1>
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <button type="submit" name="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
     </main>
 
     <?php include(asset('inc/footer.php')) ?>
