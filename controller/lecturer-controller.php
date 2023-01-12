@@ -6,7 +6,6 @@ function register($data)
     $name = $data['name'];
     $email = $data['email'];
     $matric = $data['matric'];
-    $birthday = $data['birthday'];
     $address = $data['address'];
     $phone = $data['phone'];
     $password = $data['password'];
@@ -23,8 +22,8 @@ function register($data)
         return;
     }
 
-    $query = "INSERT INTO teachers (name,email, lecturer_id, photo, birthday, address, phone, password, gender) 
-    VALUES ('$name', '$email', '$matric', '$path', '$birthday', '$address', '$phone', '$password', '$gender')";
+    $query = "INSERT INTO teachers (name,email, lecturer_id, photo, address, phone, password, gender) 
+    VALUES ('$name', '$email', '$matric', '$path', '$address', '$phone', '$password', '$gender')";
     $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
@@ -207,4 +206,36 @@ function getTotalSubjects()
     $result = mysqlj($query);
 
     return $result->num_rows;
+}
+
+function getProfile()
+{
+    $id = $_SESSION['id'];
+    $query = "SELECT * FROM teachers WHERE id=$id";
+    $result = mysqlj($query);
+
+    return  mysqli_fetch_assoc($result);
+
+}
+
+function updateProfile($data)
+{
+    $id = $_SESSION['id'];
+    $name = $data['name'];
+    $email = $data['email'];
+    $matric = $data['matric'];
+    $address = $data['address'];
+    $phone = $data['phone'];
+    $gender = $data['gender'];
+
+    $query = "UPDATE teachers SET name='$name', email='$email', lecturer_id='$matric', address='$address', phone='$phone', gender='$gender' WHERE id = $id";
+    $result = mysqlj($query);
+
+    // Check if the UPDATE statement was successful
+    if ($result) {
+        alert("Profile updated successfully.");
+        redirect(route('lecturer/'));
+    } else {
+        alert("Error update profile");
+    }
 }

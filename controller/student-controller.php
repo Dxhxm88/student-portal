@@ -6,7 +6,6 @@ function register($data)
     $name = $data['name'];
     $email = $data['email'];
     $matric = $data['matric'];
-    $birthday = $data['birthday'];
     $address = $data['address'];
     $phone = $data['phone'];
     $password = $data['password'];
@@ -23,8 +22,8 @@ function register($data)
         return;
     }
 
-    $query = "INSERT INTO students (name,email, matric, photo, birthday, address, phone, password, gender) 
-    VALUES ('$name', '$email', '$matric', '$path', '$birthday', '$address', '$phone', '$password', '$gender')";
+    $query = "INSERT INTO students (name,email, matric, photo, address, phone, password, gender) 
+    VALUES ('$name', '$email', '$matric', '$path', '$address', '$phone', '$password', '$gender')";
     $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful
@@ -126,7 +125,7 @@ function getStudentSubjects()
     $results = array();
     $id = $_SESSION['id'];
 
-    $query = "SELECT *, subjects.name as subject_name, subjects.code as subject_code FROM student_subjects INNER JOIN subjects ON student_subjects.subject_id=subjects.id WHERE student_id=$id";
+    $query = "SELECT student_subjects.id as idd, subjects.name as subject_name, subjects.code as subject_code FROM student_subjects INNER JOIN subjects ON student_subjects.subject_id=subjects.id WHERE student_id=$id";
     $result = mysqlj($query);
 
     if ($result->num_rows > 0) {
@@ -179,7 +178,15 @@ function getResultBySession($student_id, $session_id)
     WHEN results.grade >= 80 THEN 'A'
     WHEN results.grade >= 70 THEN 'B'
     WHEN results.grade >= 60 THEN 'C'
-    ELSE 'D' END AS grade_mark FROM results INNER JOIN sessions ON results.session_id=sessions.id 
+    ELSE 'D' END AS grade_mark,
+    CASE
+        WHEN results.grade >=90 THEN 4.0
+        WHEN results.grade >= 80 THEN 3.5
+        WHEN results.grade >= 70 THEN 3.3
+        WHEN results.grade >= 60 THEN 3.0
+        WHEN results.grade >= 50 THEN 2.8
+        ELSE 1.0 END AS gpa
+    FROM results INNER JOIN sessions ON results.session_id=sessions.id 
     INNER JOIN subjects ON results.subject_id=subjects.id WHERE student_id=$student_id AND session_id=$session_id";
     $result = mysqlj($query);
 
@@ -195,6 +202,42 @@ function getResultBySession($student_id, $session_id)
 
     return $results;
 }
+
+function getCGPA()
+{
+    $results = array();
+    $id = $_SESSION['id'];
+
+    $query = "SELECT results.session_id,
+    CASE
+        WHEN results.grade >=90 THEN 4.0
+        WHEN results.grade >= 80 THEN 3.5
+        WHEN results.grade >= 70 THEN 3.3
+        WHEN results.grade >= 60 THEN 3.0
+        WHEN results.grade >= 50 THEN 2.8
+        ELSE 1.0 END AS gpa
+    FROM results INNER JOIN sessions ON results.session_id=sessions.id 
+    INNER JOIN subjects ON results.subject_id=subjects.id WHERE student_id=$id";
+    $result = mysqlj($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $results[] = $row;
+        }
+
+        $totalGPA = 0.0;
+        foreach ($results as $result1) {
+            $totalGPA = $totalGPA + $result1['gpa'];
+        }
+    }else{
+        alert("No result yet");
+        // redirect(route('admin/result-view.php?student_id=' . $student_id));
+        return;
+    }
+
+    return $totalGPA/count($results);
+}
+
 
 function getTotalSubjects()
 {
@@ -221,12 +264,11 @@ function updateProfile($data)
     $name = $data['name'];
     $email = $data['email'];
     $matric = $data['matric'];
-    $birthday = $data['birthday'];
     $address = $data['address'];
     $phone = $data['phone'];
     $gender = $data['gender'];
 
-    $query = "UPDATE students SET name='$name', email='$email', matric='$matric', birthday='$birthday', address='$address', phone='$phone', gender='$gender' WHERE id = $id";
+    $query = "UPDATE students SET name='$name', email='$email', matric='$matric', address='$address', phone='$phone', gender='$gender' WHERE id = $id";
     $result = mysqlj($query);
 
     // Check if the UPDATE statement was successful

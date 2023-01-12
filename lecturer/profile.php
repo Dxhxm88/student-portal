@@ -7,6 +7,11 @@ include(asset('controller/lecturer-controller.php'));
 if (isset($_GET['logout'])) {
     logout();
 }
+$profile = getProfile();
+
+if (isset($_POST['submit'])) {
+    updateProfile($_POST);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,29 +37,37 @@ if (isset($_GET['logout'])) {
                     <h1>Lecturer Profile</h1>
 
                     <div class="col py-3">
-                <div class="container">
-                    <h1>Profile</h1>
-                </div>
 
                 <div>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" value="Abu" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" value="abu@tet.c" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Current Password</label>
-                            <input type="password" class="form-control" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">New Password</label>
-                            <input type="password" class="form-control" name="npassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                    <form method="post">
+                    <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" value="<?= $profile['name'] ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="<?= $profile['email'] ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lecturer Id</label>
+                    <input type="text" class="form-control" name="matric" value="<?= $profile['lecturer_id'] ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" rows="3" class="form-control" required><?= $profile['address'] ?></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input name="phone" class="form-control" type="text" value="<?= $profile['phone'] ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <select name="gender" class="form-control" required>
+                        <option value="male" <?= $profile['gender'] == "male" ? 'selected' : '' ?>>Male</option>
+                        <option value="female" <?= $profile['gender'] == "female" ? 'selected' : '' ?>>Female</option>
+                    </select>
+                </div>
+                        <button type="submit" name="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

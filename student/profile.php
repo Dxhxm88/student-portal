@@ -46,10 +46,6 @@ if (isset($_POST['submit'])) {
                             <input type="text" class="form-control" name="matric" value="<?= $profile['matric'] ?>"  required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Birthday</label>
-                            <input type="date" class="form-control" name="birthday" value="<?= $profile['birthday'] ?>"  required>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">Address</label>
                             <textarea name="address" rows="3" class="form-control" required><?= $profile['address'] ?></textarea>
                         </div>

@@ -48,7 +48,7 @@ if (isset($_GET['delete'])) {
                                     <td><?= $subject['subject_name'] ?></td>
                                     <td><?= $subject['subject_code'] ?></td>
                                     <td>
-                                        <a href="<?= route('student/subject.php?delete='. $subject['id']) ?>" class="btn btn-danger">Drop</a>
+                                        <a href="<?= route('student/subject.php?delete='. $subject['idd']) ?>" class="btn btn-danger">Drop</a>
                                     </td>
                                 </tr>
                             <?php } ?>

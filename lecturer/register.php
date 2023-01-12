@@ -49,10 +49,6 @@ if (isset($_POST['submit'])) {
                     <input type="text" class="form-control" name="matric" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Birthday</label>
-                    <input type="date" class="form-control" name="birthday" required>
-                </div>
-                <div class="mb-3">
                     <label class="form-label">Address</label>
                     <textarea name="address" rows="3" class="form-control" required></textarea>
                 </div>
@@ -77,6 +73,7 @@ if (isset($_POST['submit'])) {
                     <input type="password" class="form-control" name="password">
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary">Register</button>
+                <a href="<?= route('') ?>" class="btn btn-danger">Cancel</a>
             </form>
         </div>
     </main>
